@@ -22,6 +22,8 @@ export class AuthService {
     async signIn(siginUserDto: SignInUser): Promise<{ accessToken: string }> {
 
         const { email, password } = siginUserDto;
+
+        // if user is not found an error will be thrown by the repository
         let user = await this.userRepository.findUserByEmail(email);
 
 

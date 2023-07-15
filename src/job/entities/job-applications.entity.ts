@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { JobApplicationState } from "../utils/job-application-state.enum";
 import { Job } from "./job.entity";
 
@@ -6,6 +6,8 @@ import { Job } from "./job.entity";
 @Entity("job_applications")
 export class JobApplication {
 
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
     // connect to the job
 
     // refer the one who apply for the job
@@ -24,4 +26,5 @@ export class JobApplication {
 
     @ManyToOne((_type) => Job, (job) => job.applications)
     job: Job;
+
 }

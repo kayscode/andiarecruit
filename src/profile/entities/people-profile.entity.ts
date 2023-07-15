@@ -1,5 +1,6 @@
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Location } from "./location.entity";
 
 @Entity("people_profiles")
 export class PeopleProfile {
@@ -26,11 +27,13 @@ export class PeopleProfile {
     profile: string;
 
     @OneToOne((_type) => Location, { lazy: true })
+    @JoinColumn()
     location: Location
 
     @Column({ nullable: true })
     image: string;
 
-    // @OneToOne(() => User, (user) => user.profile, { eager: true })
-    // user: User
+    @OneToOne(() => User, (user) => user.profile, { lazy: true, onDelete: 'CASCADE', nullable: true })
+    @JoinColumn({ name: "owner" })
+    user: User
 }

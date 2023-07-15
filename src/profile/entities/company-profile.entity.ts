@@ -1,5 +1,7 @@
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Location } from "./location.entity";
+import { Job } from "src/job/entities/job.entity";
 
 @Entity("company_profiles")
 export class CompanyProfile {
@@ -28,10 +30,15 @@ export class CompanyProfile {
     @Column({ nullable: true })
     logo: string;
 
-    @OneToOne(() => User)
+    @OneToOne(() => User, (user) => user.profile, { lazy: true, nullable: true, onDelete: 'CASCADE' })
+    @JoinColumn({ name: "owner" })
     user: User;
 
-    @OneToOne(() => Location, { lazy: true })
+    @OneToOne(() => Location, { lazy: true, nullable: true })
+    @JoinColumn()
     location: Location;
+
+    @OneToMany(() => Job, (job) => job.company)
+    jobs: Job[];
 
 }

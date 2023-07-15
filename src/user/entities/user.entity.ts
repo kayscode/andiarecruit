@@ -18,4 +18,7 @@ export class User {
 
     @Column({ nullable: false })
     role: UserType;
+
+    @Column({ nullable: true })
+    profile: string;
 }

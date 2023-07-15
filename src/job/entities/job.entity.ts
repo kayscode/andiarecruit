@@ -1,6 +1,7 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { RecruitingState } from "../utils/job-recruiting-state.enum";
 import { JobApplication } from "./job-applications.entity";
+import { CompanyProfile } from "src/profile/entities/company-profile.entity";
 
 @Entity('jobs')
 export class Job {
@@ -40,4 +41,7 @@ export class Job {
 
     @OneToMany((_type) => JobApplication, (JobApplication) => JobApplication.job)
     applications: JobApplication[]
+
+    @ManyToOne((_type) => CompanyProfile, (companyProfile) => companyProfile.jobs)
+    company: CompanyProfile
 }
